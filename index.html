@@ -468,163 +468,6 @@
     نتمنى لكم وجبة شهية وهنيئة
   </div>
 </div>
-
-<script>
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxS8KcQsEOY_--E4bUZTT3YKpsPLJgcEahnhZkweIdz47fyNF-jLyyy6IZAD7EAV8UhOQ/exec"; 
-  const WHATSAPP_NUMBER = "249117399010"; 
-
-  function toggleAddressField() {
-    let fulfillment = document.getElementById('fulfillmentType').value;
-    let addressContainer = document.getElementById('addressContainer');
-    let addressInput = document.getElementById('address');
-    
-    if (fulfillment === "استلام من المحل") {
-      addressContainer.style.display = "none";
-      addressInput.required = false;
-      addressInput.value = "استلام مباشر من المحل";
-    } else {
-      addressContainer.style.display = "block";
-      addressInput.required = true;
-      addressInput.value = "";
-    }
-  }
-
-  function calculateTotal() {
-    let subtotal = 0;
-    document.querySelectorAll('.qty').forEach(input => {
-      let qty = parseInt(input.value) || 0;
-      let price = parseInt(input.getAttribute('data-price'));
-      subtotal += qty * price;
-    });
-
-    let fulfillment = document.getElementById('fulfillmentType').value;
-    let deliveryFee = (fulfillment === "توصيل") ? 1000 : 0;
-
-    document.getElementById('deliveryDisplay').innerText = deliveryFee.toLocaleString() + " ج.س";
-    document.getElementById('subtotalDisplay').innerText = subtotal.toLocaleString() + " ج.س";
-    document.getElementById('totalDisplay').innerText = (subtotal + deliveryFee).toLocaleString() + " ج.س";
-  }
-
-  function toggleWalletNotice() {
-    let paymentMethod = document.getElementById('paymentMethod').value;
-    let notice = document.getElementById('walletNotice');
-    notice.style.display = (paymentMethod === "محفظة صاح") ? "block" : "none";
-  }
-
-  // تشغيل عند التحميل لضبط حالة العنوان
-  window.onload = function() {
-    toggleAddressField();
-    calculateTotal();
-  };
-
-  document.getElementById('orderForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    let items = [];
-    let detailsText = "";
-    let subtotal = 0;
-
-    document.querySelectorAll('.qty').forEach(input => {
-      let qty = parseInt(input.value) || 0;
-      if (qty > 0) {
-        let name = input.getAttribute('data-name');
-        let price = parseInt(input.getAttribute('data-price'));
-        items.push({ name, qty, price, total: qty * price });
-        detailsText += `${name} (×${qty}) `;
-        subtotal += qty * price;
-      }
-    });
-
-    if (items.length === 0) {
-      alert("الرجاء اختيار صنف واحد على الأقل من القائمة.");
-      return;
-    }
-
-    let fulfillment = document.getElementById('fulfillmentType').value;
-    let address = document.getElementById('address').value;
-    let deliveryFee = (fulfillment === "توصيل") ? 1000 : 0;
-    let total = subtotal + deliveryFee;
-    let isSpicy = document.getElementById('isSpicy').checked;
-    let paymentMethod = document.getElementById('paymentMethod').value;
-
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerText = "⏳ جاري إرسال الطلب وإصدار الفاتورة...";
-
-    const orderData = {
-      name: document.getElementById('name').value,
-      phone: document.getElementById('phone').value,
-      fulfillment: fulfillment + " - " + address,
-      details: detailsText,
-      isSpicy: isSpicy,
-      paymentMethod: paymentMethod,
-      subtotal: subtotal,
-      delivery: deliveryFee,
-      total: total
-    };
-
-    try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify(orderData)
-      });
-      const res = await response.json();
-
-      if (res.result === "success") {
-        const serial = res.serial;
-        const date = res.date;
-
-        // تعبئة الفاتورة للـ PDF
-        document.getElementById('pdf-serial').innerText = serial;
-        document.getElementById('pdf-date').innerText = date;
-        document.getElementById('pdf-name').innerText = orderData.name;
-        document.getElementById('pdf-phone').innerText = orderData.phone;
-        document.getElementById('pdf-fulfillment').innerText = fulfillment;
-        document.getElementById('pdf-address').innerText = address;
-        document.getElementById('pdf-payment').innerText = paymentMethod;
-        document.getElementById('pdf-spicy').innerText = isSpicy ? "سبايسي 🌶️" : "عادي";
-        document.getElementById('pdf-subtotal').innerText = subtotal.toLocaleString();
-        document.getElementById('pdf-delivery-fee').innerText = deliveryFee.toLocaleString();
-        document.getElementById('pdf-total').innerText = total.toLocaleString();
-
-        let tbody = document.getElementById('pdf-items');
-        tbody.innerHTML = "";
-        items.forEach(item => {
-          tbody.innerHTML += `<tr><td>${item.name}</td><td>${item.qty}</td><td>${item.total.toLocaleString()} ج.س</td></tr>`;
-        });
-
-        const element = document.getElementById('invoice-template');
-        element.style.display = 'block';
-
-        const opt = {
-          margin: 10,
-          filename: `TaifSnacks_${serial}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        await html2pdf().set(opt).from(element).save();
-        element.style.display = 'none';
-
-        // رسالة الواتساب الاحترافية والموجهة
-        let walletExtra = (paymentMethod === "محفظة صاح") ? `%0A*⚠️ تنبيه التحويل:* تم التحويل لمحفظة صاح (07209105766599) وتم كتابة رقم الأوردر (${serial}) في التعليق.` : "";
-        let spicyText = isSpicy ? " | سبايسي 🌶️" : "";
-        
-        const msg = `مرحباً طيف اسناكس 🍔%0Aأرغب في تأكيد طلب جديد:%0A*رقم الأوردر:* ${serial}%0A*الاسم:* ${orderData.name}%0A*الاستلام:* ${fulfillment}%0A*العنوان:* ${address}%0A*الطلبات:* ${detailsText}${spicyText}%0A*الدفع:* ${paymentMethod}%0A*الإجمالي النهائي:* ${total.toLocaleString()} ج.س${walletExtra}%0A%0A(تم حفظ الفاتورة PDF على جهازي وجاهزة للإرسال).`;
-        
-        window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-      } else {
-        alert("حدث خطأ أثناء حفظ الطلب، يرجى المحاولة مرة أخرى.");
-        btn.disabled = false;
-        btn.innerText = "✨ تأكيد الطلب وإصدار الفاتورة";
-      }
-    } catch (err) {
-      alert("تعذر الاتصال بالسيرفر، تأكد من اتصال الإنترنت.");
-      btn.disabled = false;
-      btn.innerText = "✨ تأكيد الطلب وإصدار الفاتورة";
-    }
-  });
 <script>
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-O9deorLe5FC5abEC5OxZM2L0LkyiJF7FHYzzNuzPfEEMYHXu3Pytgn49e_-csEV0mQ/exec"; 
   const WHATSAPP_NUMBER = "249117399010"; 
@@ -704,9 +547,9 @@
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerText = "⏳ جاري إرسال الطلب وإصدار الفاتورة...";
+    btn.innerText = "⏳ جاري إصدار الفاتورة والتحويل للواتساب...";
 
-    // توليد سيريال مؤقت لضمان صدور الفاتورة والفورمة فوراً
+    // توليد رقم أوردر متسلسل وتاريخ اليوم
     const now = new Date();
     const dateStr = now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2);
     const displayDate = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
@@ -725,7 +568,7 @@
       total: total
     };
 
-    // إرسال البيانات لشيت جوجل في الخلفية بدون مشاكل CORS
+    // إرسال البيانات لشيت جوجل بهدوء في الخلفية دون انتظار أو تداخل
     try {
       fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
@@ -734,10 +577,10 @@
         body: JSON.stringify(orderData)
       });
     } catch (err) {
-      console.log("Background sync:", err);
+      console.log("Background sync error ignored");
     }
 
-    // إعداد الفاتورة وتحويلها لـ PDF للعميل
+    // تعبئة وتوليد الفاتورة PDF للعميل
     document.getElementById('pdf-serial').innerText = serial;
     document.getElementById('pdf-date').innerText = displayDate;
     document.getElementById('pdf-name').innerText = orderData.name;
@@ -770,11 +613,11 @@
     try {
       await html2pdf().set(opt).from(element).save();
     } catch(e) {
-      console.log("PDF error:", e);
+      console.log("PDF save note:", e);
     }
     element.style.display = 'none';
 
-    // الانتقال للواتساب برسالة الطلب التفصيلية
+    // التوجه المباشر للواتساب برقم الأوردر والتفاصيل
     let walletExtra = (paymentMethod === "محفظة صاح") ? `%0A*⚠️ تنبيه التحويل:* تم التحويل لمحفظة صاح (07209105766599) وتم كتابة رقم الأوردر (${serial}) في التعليق.` : "";
     let spicyText = isSpicy ? " | سبايسي 🌶️" : "";
     
@@ -784,3 +627,4 @@
   });
 </script>
 </html>
+
