@@ -470,7 +470,7 @@
 </div>
 
 <script>
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGNS6FdijVkjz7IZP8a5QO9-a6NObfhCA5YUx6oCNVHU94jNEUeUrKEAcAy1Tx4kk_/exec"; 
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2vhFQe7OQA0W-2t5TBXH1dNZfWcMV89-osa6gs4ZE6SpxzCaeVZK-e6pJMI0UtBVk/exec"; 
   const WHATSAPP_NUMBER = "249117399010"; 
 
   function toggleAddressField() {
@@ -548,14 +548,7 @@
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerText = "⏳ جاري إصدار الفاتورة والتحويل للواتساب...";
-
-    // توليد رقم أوردر متسلسل وتاريخ اليوم
-    const now = new Date();
-    const dateStr = now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2);
-    const displayDate = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    const serial = "ORD" + dateStr + "-" + randomNum;
+    btn.innerText = "⏳ جاري حفظ الطلب في النظام وإصدار الفاتورة...";
 
     const orderData = {
       name: document.getElementById('name').value,
@@ -569,19 +562,27 @@
       total: total
     };
 
-    // إرسال البيانات لشيت جوجل بهدوء في الخلفية دون انتظار أو تداخل
+    let serial = "ORD-TEMP";
+    let displayDate = new Date().toISOString().slice(0,10);
+
+    // إرسال البيانات لجوجل شيت وانتظار السيريال الحقيقي
     try {
-      fetch(GOOGLE_SCRIPT_URL, {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
       });
+      const res = await response.json();
+      if (res.result === "success") {
+        serial = res.serial;
+        displayDate = res.date;
+      }
     } catch (err) {
-      console.log("Background sync error ignored");
+      console.log("Sheet connection note, proceeding locally");
+      const now = new Date();
+      serial = "ORD" + now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2) + "-01";
     }
 
-    // تعبئة وتوليد الفاتورة PDF للعميل
+    // تعبئة وتوليد الفاتورة PDF
     document.getElementById('pdf-serial').innerText = serial;
     document.getElementById('pdf-date').innerText = displayDate;
     document.getElementById('pdf-name').innerText = orderData.name;
@@ -614,11 +615,11 @@
     try {
       await html2pdf().set(opt).from(element).save();
     } catch(e) {
-      console.log("PDF save note:", e);
+      console.log("PDF error:", e);
     }
     element.style.display = 'none';
 
-    // التوجه المباشر للواتساب برقم الأوردر والتفاصيل
+    // الانتقال للواتساب برقم السيريال والتفاصيل
     let walletExtra = (paymentMethod === "محفظة صاح") ? `%0A*⚠️ تنبيه التحويل:* تم التحويل لمحفظة صاح (07209105766599) وتم كتابة رقم الأوردر (${serial}) في التعليق.` : "";
     let spicyText = isSpicy ? " | سبايسي 🌶️" : "";
     
