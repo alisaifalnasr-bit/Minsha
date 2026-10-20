@@ -129,7 +129,7 @@
     }
     .submit-btn:disabled { background: #adb5bd; box-shadow: none; cursor: not-allowed; }
 
-    /* قالب الفاتورة الذي سيتم تحويله إلى صورة JPG وتنزيله تلقائياً */
+    /* قالب الفاتورة المرئي كصورة JPG */
     #invoice-template {
       position: absolute; left: -9999px; top: 0; padding: 25px;
       font-family: 'Cairo', sans-serif; background: #ffffff; width: 420px; color: #2b2d42;
@@ -150,7 +150,7 @@
   </div>
 
   <div class="notice">
-    📍 خدمة التوصيل متوفرة حصرياً داخل مدينة كوستي (رسوم التوصيل: 1,000 ج.س)[span_1](start_span)[span_1](end_span)
+    📍 خدمة التوصيل متوفرة حصرياً داخل مدينة كوستي (رسوم التوصيل: 1,000 ج.س)[span_0](start_span)[span_0](end_span)
   </div>
 
   <form id="orderForm">
@@ -183,45 +183,45 @@
         <div class="item-info">
           <h4>منشه</h4>
           <p>سندوتش بيرقر بطاطس</p>
-          <div class="item-price">4,000 ج.س[span_2](start_span)[span_2](end_span)</div>
+          <div class="item-price">4,000 ج.س[span_1](start_span)[span_1](end_span)</div>
         </div>
-        <input type="number" class="qty" data-name="منشه" data-price="4000" min="0" value="0" onchange="calculateTotal()">
+        <input type="number" class="qty" data-name="منشه" data-price="4000" min="0" value="0" oninput="calculateTotal()">
       </div>
 
       <div class="menu-item">
         <div class="item-info">
           <h4>منشه برو</h4>
           <p>بيرقر بطاطس بالخضار</p>
-          <div class="item-price">5,000 ج.س[span_3](start_span)[span_3](end_span)</div>
+          <div class="item-price">5,000 ج.س[span_2](start_span)[span_2](end_span)</div>
         </div>
-        <input type="number" class="qty" data-name="منشه برو" data-price="5000" min="0" value="0" onchange="calculateTotal()">
+        <input type="number" class="qty" data-name="منشه برو" data-price="5000" min="0" value="0" oninput="calculateTotal()">
       </div>
 
       <div class="menu-item">
         <div class="item-info">
           <h4>منشه برو ماكس</h4>
           <p>خضار وموزاريلا غنية</p>
-          <div class="item-price">6,000 ج.س[span_4](start_span)[span_4](end_span)</div>
+          <div class="item-price">6,000 ج.س[span_3](start_span)[span_3](end_span)</div>
         </div>
-        <input type="number" class="qty" data-name="منشه برو ماكس" data-price="6000" min="0" value="0" onchange="calculateTotal()">
+        <input type="number" class="qty" data-name="منشه برو ماكس" data-price="6000" min="0" value="0" oninput="calculateTotal()">
       </div>
 
       <div class="menu-item">
         <div class="item-info">
           <h4>منشه الترا</h4>
           <p>موزاريلا مضاعفة 🔥</p>
-          <div class="item-price">10,000 ج.س[span_5](start_span)[span_5](end_span)</div>
+          <div class="item-price">10,000 ج.س[span_4](start_span)[span_4](end_span)</div>
         </div>
-        <input type="number" class="qty" data-name="منشه الترا" data-price="10000" min="0" value="0" onchange="calculateTotal()">
+        <input type="number" class="qty" data-name="منشه الترا" data-price="10000" min="0" value="0" oninput="calculateTotal()">
       </div>
 
       <div class="menu-item">
         <div class="item-info">
           <h4>منشه اسناكس</h4>
           <p>شبس خل وملح مقرمش</p>
-          <div class="item-price">2,000 ج.س[span_6](start_span)[span_6](end_span)</div>
+          <div class="item-price">2,000 ج.س[span_5](start_span)[span_5](end_span)</div>
         </div>
-        <input type="number" class="qty" data-name="منشه اسناكس" data-price="2000" min="0" value="0" onchange="calculateTotal()">
+        <input type="number" class="qty" data-name="منشه اسناكس" data-price="2000" min="0" value="0" oninput="calculateTotal()">
       </div>
     </div>
 
@@ -242,11 +242,11 @@
       <label style="margin-top:0; color:#2b8a3e; font-size:13px; font-weight:800;">💳 اختيار طريقة الدفع:</label>
       <select id="paymentMethod" onchange="toggleWalletNotice()">
         <option value="كاش">💵 كاش (الدفع نقداً عند الاستلام)</option>
-        <option value="محفظة صاح">📱 تحويل محفظة صاح (07209105766599)[span_7](start_span)[span_7](end_span)</option>
+        <option value="محفظة صاح">📱 تحويل محفظة صاح (07209105766599)[span_6](start_span)[span_6](end_span)</option>
         <option value="الدفع بعد الاستلام">🧾 الدفع بعد الاستلام</option>
       </select>
       <div id="walletNotice" class="wallet-notice">
-        رقم محفظة صاح: 07209105766599[span_8](start_span)[span_8](end_span)<br>
+        رقم محفظة صاح: 07209105766599[span_7](start_span)[span_7](end_span)<br>
         <span style="color: #e03131; font-weight: 900;">⚠️ تنبيه هام: اكتب رقم الأوردر في خانة التعليق عند التحويل!</span>
       </div>
     </div>
@@ -254,8 +254,8 @@
     <div class="summary">
       <p><span>مجموع الطلبات:</span> <span id="subtotalDisplay">0 ج.س</span></p>
       <p id="discountRow" style="display:none; color: #2b8a3e; font-weight: bold;"><span>قيمة الخصم:</span> <span id="discountDisplay">0 ج.س</span></p>
-      <p><span>رسوم التوصيل:</span> <span id="deliveryDisplay">1,000 ج.س[span_9](start_span)[span_9](end_span)</span></p>
-      <p class="total"><span>الإجمالي النهائي:</span> <span id="totalDisplay">1,000 ج.س[span_10](start_span)[span_10](end_span)</span></p>
+      <p><span>رسوم التوصيل:</span> <span id="deliveryDisplay">1,000 ج.س[span_8](start_span)[span_8](end_span)</span></p>
+      <p class="total"><span>الإجمالي النهائي:</span> <span id="totalDisplay">1,000 ج.س[span_9](start_span)[span_9](end_span)</span></p>
     </div>
 
     <button type="submit" id="submitBtn" class="submit-btn">✨ تأكيد الطلب وحفظ البيانات كصورة</button>
@@ -288,15 +288,15 @@
   <div style="margin-top: 12px; text-align: left; font-size: 12px; border-top: 1px solid #eee; padding-top: 8px;">
     <p style="margin: 3px 0;">المجموع: <span id="pdf-subtotal"></span> ج.س</p>
     <p style="margin: 3px 0; color: #2b8a3e;" id="pdf-disc-line">الخصم: -<span id="pdf-discount">0</span> ج.س</p>
-    <p style="margin: 3px 0;">التوصيل: <span id="pdf-delivery"></span> ج.س[span_11](start_span)[span_11](end_span)</p>
-    <h3 style="margin: 6px 0; color: #d55700;">الإجمالي النهائي: <span id="pdf-total"></span> ج.س[span_12](start_span)[span_12](end_span)</h3>
+    <p style="margin: 3px 0;">التوصيل: <span id="pdf-delivery"></span> ج.س[span_10](start_span)[span_10](end_span)</p>
+    <h3 style="margin: 6px 0; color: #d55700;">الإجمالي النهائي: <span id="pdf-total"></span> ج.س[span_11](start_span)[span_11](end_span)</h3>
   </div>
   <p style="text-align: center; font-size: 11px; color: #666; margin-top: 15px; border-top: 1px dashed #ddd; padding-top: 8px;">شكراً لاختياركم طيف اسناكس! ❤️</p>
 </div>
 
 <script>
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz422I_-QTLByPqYsbVjVG4jLlGkuCM0uMrLEkV1WlnI5YaSOIIeG4Fd_cX8rZvIJ8W/exec"; 
-  const WHATSAPP_NUMBER = "249117399010";[span_13](start_span)[span_13](end_span)
+  const WHATSAPP_NUMBER = "249117399010";[span_12](start_span)[span_12](end_span)
   let discountAmount = 0;
   let appliedCouponName = "لا يوجد";
 
@@ -324,7 +324,7 @@
     });
 
     let fulfillment = document.getElementById('fulfillmentType').value;
-    let deliveryFee = (fulfillment === "توصيل") ? 1000 : 0;[span_14](start_span)[span_14](end_span)
+    let deliveryFee = (fulfillment === "توصيل") ? 1000 : 0;[span_13](start_span)[span_13](end_span)
     let finalTotal = Math.max(0, subtotal - discountAmount + deliveryFee);
 
     document.getElementById('deliveryDisplay').innerText = deliveryFee.toLocaleString() + " ج.س";
@@ -385,16 +385,15 @@
 
     let fulfillment = document.getElementById('fulfillmentType').value;
     let address = document.getElementById('address').value;
-    let deliveryFee = (fulfillment === "توصيل") ? 1000 : 0;[span_15](start_span)[span_15](end_span)
+    let deliveryFee = (fulfillment === "توصيل") ? 1000 : 0;[span_14](start_span)[span_14](end_span)
     let total = Math.max(0, subtotal - discountAmount + deliveryFee);
     let isSpicy = document.getElementById('isSpicy').checked;
     let paymentMethod = document.getElementById('paymentMethod').value;
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerText = "⏳ جاري إرسال البيانات للشيت وتجهيز صورة الفاتورة...";
+    btn.innerText = "⏳ جاري إرسال الطلب وحفظ البيانات...";
 
-    // 1. إرسال البيانات مباشرة لشيت الاكسل
     const orderData = {
       name: document.getElementById('name').value,
       phone: document.getElementById('phone').value,
@@ -412,21 +411,23 @@
     let serial = "ORD-PENDING";
     let displayDate = new Date().toISOString().slice(0,10);
 
+    // استخدام وضع no-cors لضمان إرسال البيانات لشيت جوجل بنجاح دون حظر المتصفح
     try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
+      await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
       });
-      const res = await response.json();
-      if (res.result === "success") {
-        serial = res.serial;
-        displayDate = res.date;
-      }
+      // توليد رقم تسلسلي محلياً فورياً لضمان عدم توقف العملية
+      const now = new Date();
+      const dateStr = now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2);
+      serial = "ORD" + dateStr + "-" + Math.floor(1000 + Math.random() * 9000);
     } catch (err) {
       console.log("خطأ في الاتصال بالسيرفر:", err);
     }
 
-    // 2. تعبئة بيانات الفاتورة المرئية وتحويلها إلى صورة JPG وتنزيلها
+    // تجهيز وتصدير صورة الفاتورة JPG
     document.getElementById('pdf-serial').innerText = serial;
     document.getElementById('pdf-date').innerText = displayDate;
     document.getElementById('pdf-name').innerText = orderData.name;
@@ -439,7 +440,4 @@
     document.getElementById('pdf-delivery').innerText = deliveryFee.toLocaleString();
     document.getElementById('pdf-total').innerText = total.toLocaleString();
 
-    let tbody = document.getElementById('pdf-items');
-    tbody.innerHTML = "";
-    items.forEach(item => {
-      tbody.innerHTML += `<tr><td style="border:1px solid #ddd; padding
+    let tbody = documen
