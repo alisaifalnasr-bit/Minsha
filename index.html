@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>طيف اسناكس | منشه دايماً بتبسطك</title>
-  <!-- مكتبة تحويل الفاتورة إلى PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <!-- خط عربى حديث (Cairo) -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -16,9 +14,7 @@
       --bg-gradient: linear-gradient(135deg, #fff8f0 0%, #ffe0b2 100%);
       --card-bg: #ffffff;
       --text-main: #2d3748;
-      --text-muted: #718096;
     }
-
     body {
       font-family: 'Cairo', sans-serif;
       background: var(--bg-gradient);
@@ -27,7 +23,6 @@
       color: var(--text-main);
       min-height: 100vh;
     }
-
     .container {
       max-width: 520px;
       margin: auto;
@@ -37,368 +32,119 @@
       box-shadow: 0 10px 30px rgba(230, 81, 0, 0.12);
       border: 1px solid rgba(255, 183, 0, 0.3);
     }
-
-    .header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .logo-container {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 10px auto;
-      border-radius: 50%;
-      background: #fff3e0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(255, 111, 0, 0.2);
-      border: 2px solid var(--accent);
-      overflow: hidden;
-    }
-
-    .logo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .shop-title {
-      color: var(--primary-dark);
-      margin: 0;
-      font-size: 26px;
-      font-weight: 900;
-    }
-
-    .slogan {
-      color: #d84315;
-      font-size: 15px;
-      margin-top: 4px;
-      font-weight: 700;
-      background: #fff3e0;
-      display: inline-block;
-      padding: 4px 14px;
-      border-radius: 20px;
-    }
-
-    .notice {
-      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-      color: #bf360c;
-      padding: 12px;
+    .header { text-align: center; margin-bottom: 20px; }
+    .shop-title { color: var(--primary-dark); font-size: 26px; font-weight: 900; margin: 0; }
+    .slogan { color: #d84315; font-size: 14px; font-weight: 700; background: #fff3e0; display: inline-block; padding: 4px 14px; border-radius: 20px; margin-top: 5px; }
+    .notice { background: #fff3e0; color: #bf360c; padding: 10px; border-radius: 10px; font-size: 13px; text-align: center; margin-bottom: 15px; font-weight: 600; border-right: 4px solid var(--primary); }
+    
+    /* تصميم بارز وواضح للكوبون */
+    .coupon-section {
+      background: #e1f5fe;
+      border: 2px dashed #0288d1;
+      padding: 14px;
       border-radius: 12px;
-      font-size: 13px;
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: 600;
-      border-right: 4px solid var(--primary);
+      margin-top: 15px;
     }
+    .coupon-box { display: flex; gap: 8px; margin-top: 6px; }
+    .coupon-box input { flex: 1; padding: 10px; border: 1px solid #90caf9; border-radius: 8px; font-family: 'Cairo'; }
+    .coupon-btn { padding: 0 18px; background: #0288d1; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; }
 
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin: 20px 0 10px 0;
-    }
-
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: 700;
-      font-size: 13px;
-      color: #4a5568;
-    }
-
+    label { display: block; margin-top: 12px; font-weight: 700; font-size: 13px; color: #4a5568; }
     input[type="text"], input[type="tel"], textarea, select {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border: 2px solid #edf2f7;
-      border-radius: 10px;
-      box-sizing: border-box;
-      font-size: 14px;
-      font-family: 'Cairo', sans-serif;
-      background: #f8fafc;
+      width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #edf2f7; border-radius: 10px; box-sizing: border-box; font-size: 14px; font-family: 'Cairo'; background: #f8fafc;
     }
+    .menu-item { background: #fff; border: 2px solid #f1f5f9; padding: 12px; border-radius: 12px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .menu-item h4 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+    .menu-item p { margin: 0; font-size: 11px; color: #718096; }
+    .menu-item input[type="number"] { width: 60px; padding: 6px; text-align: center; font-weight: bold; font-size: 14px; border-radius: 6px; border: 2px solid #cbd5e1; }
+    
+    .options-box { background: #fff5f5; border: 1px solid #fed7d7; padding: 10px; border-radius: 10px; margin-top: 12px; display: flex; align-items: center; gap: 8px; }
+    .payment-box { background: #f0fff4; border: 1px solid #c6f6d5; padding: 12px; border-radius: 10px; margin-top: 12px; }
+    .wallet-notice { display: none; margin-top: 8px; padding: 8px; background: #fff5f5; border: 2px dashed #e53e3e; color: #c53030; font-weight: bold; font-size: 12px; text-align: center; border-radius: 6px; }
 
-    .menu-item {
-      background: #ffffff;
-      border: 2px solid #f1f5f9;
-      padding: 14px;
-      border-radius: 14px;
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .summary { background: #fffaf0; border: 1px solid #feebc8; padding: 12px; border-radius: 12px; margin-top: 15px; font-size: 13px; }
+    .summary p { margin: 6px 0; display: flex; justify-content: space-between; }
+    .total { font-weight: 900; color: var(--primary-dark); font-size: 16px; border-top: 2px dashed #fbd38d; padding-top: 8px; margin-top: 8px; }
 
-    .item-info h4 {
-      margin: 0 0 4px 0;
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    .item-info p {
-      margin: 0;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .item-price {
-      color: var(--primary-dark);
-      font-weight: 800;
-      font-size: 13px;
-      margin-top: 2px;
-    }
-
-    .menu-item input[type="number"] {
-      width: 65px;
-      padding: 8px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 15px;
-      border-radius: 8px;
-      border: 2px solid #e2e8f0;
-    }
-
-    .options-box {
-      background: #fff5f5;
-      border: 1px solid #fed7d7;
-      padding: 12px;
-      border-radius: 12px;
-      margin-top: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .payment-box {
-      background: #f0fff4;
-      border: 1px solid #c6f6d5;
-      padding: 14px;
-      border-radius: 12px;
-      margin-top: 15px;
-    }
-
-    .wallet-notice {
-      display: none;
-      margin-top: 10px;
-      padding: 10px;
-      background: #fff5f5;
-      border: 2px dashed #e53e3e;
-      color: #c53030;
-      font-weight: 700;
-      font-size: 12px;
-      text-align: center;
-      border-radius: 8px;
-    }
-
-    .coupon-box {
-      margin-top: 15px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .coupon-box input {
-      margin-top: 0 !important;
-    }
-
-    .coupon-btn {
-      padding: 0 20px;
-      background: #2b6cb0;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Cairo', sans-serif;
-    }
-
-    .summary {
-      background: #fffaf0;
-      border: 1px solid #feebc8;
-      padding: 15px;
-      border-radius: 14px;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-
-    .summary p {
-      margin: 8px 0;
-      display: flex;
-      justify-content: space-between;
-      color: #4a5568;
-    }
-
-    .total {
-      font-weight: 900;
-      color: var(--primary-dark);
-      font-size: 17px;
-      border-top: 2px dashed #fbd38d;
-      padding-top: 10px;
-      margin-top: 10px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 800;
-      margin-top: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3);
-      font-family: 'Cairo', sans-serif;
-    }
-
-    .submit-btn:disabled {
-      background: #cbd5e1;
-      cursor: not-allowed;
-    }
-
-    /* قالب الفاتورة PDF العصرية والواضحة */
-    #invoice-template {
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      padding: 25px;
-      font-family: 'Cairo', sans-serif;
-      background: #fff;
-      width: 450px;
-      color: #2d3748;
-    }
-    .pdf-header {
-      text-align: center;
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 15px;
-      margin-bottom: 15px;
-    }
-    .pdf-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      font-size: 12px;
-    }
-    .pdf-table th, .pdf-table td {
-      border: 1px solid #e2e8f0;
-      padding: 8px;
-      text-align: right;
-    }
-    .pdf-table th {
-      background-color: #fff3e0;
-      color: var(--primary-dark);
-    }
-    .pdf-footer {
-      text-align: center;
-      margin-top: 20px;
-      border-top: 1px dashed #cbd5e1;
-      padding-top: 10px;
-      font-size: 12px;
-      color: var(--primary);
-      font-weight: 700;
-    }
+    .submit-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 800; margin-top: 15px; cursor: pointer; font-family: 'Cairo'; }
+    
+    #invoice-template { position: absolute; left: -9999px; top: 0; padding: 20px; font-family: 'Cairo'; background: #fff; width: 400px; color: #2d3748; }
   </style>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
-    <div class="logo-container">
-      <img src="logo.png" alt="طيف اسناكس" class="logo" onerror="this.style.display='none'">
-    </div>
     <h1 class="shop-title">طيف اسناكس</h1>
     <div class="slogan">منشه دايماً بتبسطك ✨</div>
   </div>
 
-  <div class="notice">
-    📍 خدمة التوصيل متوفرة حصرياً داخل مدينة كوستي (رسوم التوصيل: 1,000 ج.س)
-  </div>
+  <div class="notice">📍 التوصيل حصرياً داخل مدينة كوستي (رسوم التوصيل: 1,000 ج.س)</div>
 
   <form id="orderForm">
-    <label>👤 اسم العميل الكريم:</label>
-    <input type="text" id="name" required placeholder="أدخل اسمك الثلاثي">
+    <label>👤 اسم العميل:</label>
+    <input type="text" id="name" required placeholder="أدخل اسمك الكريم">
 
     <label>📱 رقم الهاتف:</label>
     <input type="tel" id="phone" required placeholder="مثال: 0912345678">
 
     <label>🏠 طريقة الاستلام:</label>
     <select id="fulfillmentType" onchange="toggleAddressField(); calculateTotal();">
-      <option value="توصيل">🚚 توصيل للمنزل (داخل مدينة كوستي - 1,000 ج.س)</option>
-      <option value="استلام من المحل">🏪 استلام مباشر من المحل (بدون رسوم)</option>
+      <option value="توصيل">🚚 توصيل للمنزل (داخل كوستي - 1,000 ج.س)</option>
+      <option value="استلام من المحل">🏪 استلام من المحل (بدون رسوم)</option>
     </select>
 
     <div id="addressContainer">
-      <label>📍 عنوان التوصيل بالتفصيل (الحي / المعلم البارز):</label>
+      <label>📍 تفاصيل العنوان (الحي / المعلم):</label>
       <textarea id="address" rows="2" placeholder="مثال: الحي الشرقي، قرب جامع النور"></textarea>
     </div>
 
-    <div class="section-title">🍔 اختر من قائمة منشه الشهية:</div>
+    <div style="font-weight: 700; margin-top: 15px; font-size: 14px;">🍔 قائمة الأصناف:</div>
 
     <div class="menu-item">
-      <div class="item-info">
-        <h4>منشه</h4>
-        <p>سندوتش بيرقر بطاطس لذيذ</p>
-        <div class="item-price">4,000 ج.س</div>
-      </div>
+      <div><h4>منشه</h4><p>بيرقر بطاطس</p><div style="color:var(--primary-dark); font-weight:bold;">4,000 ج.س</div></div>
       <input type="number" class="qty" data-name="منشه" data-price="4000" min="0" value="0" onchange="calculateTotal()">
     </div>
 
     <div class="menu-item">
-      <div class="item-info">
-        <h4>منشه برو</h4>
-        <p>سندوتش بيرقر بطاطس بالخضار</p>
-        <div class="item-price">5,000 ج.س</div>
-      </div>
+      <div><h4>منشه برو</h4><p>بيرقر بطاطس بالخضار</p><div style="color:var(--primary-dark); font-weight:bold;">5,000 ج.س</div></div>
       <input type="number" class="qty" data-name="منشه برو" data-price="5000" min="0" value="0" onchange="calculateTotal()">
     </div>
 
     <div class="menu-item">
-      <div class="item-info">
-        <h4>منشه برو ماكس</h4>
-        <p>بيرقر بطاطس بالخضار وجبنة الموزاريلا</p>
-        <div class="item-price">6,000 ج.س</div>
-      </div>
+      <div><h4>منشه برو ماكس</h4><p>خضار وموزاريلا</p><div style="color:var(--primary-dark); font-weight:bold;">6,000 ج.س</div></div>
       <input type="number" class="qty" data-name="منشه برو ماكس" data-price="6000" min="0" value="0" onchange="calculateTotal()">
     </div>
 
     <div class="menu-item">
-      <div class="item-info">
-        <h4>منشه الترا</h4>
-        <p>سندوتش بيرقر بخضار وموزاريلا مضاعفة 🔥</p>
-        <div class="item-price">10,000 ج.س</div>
-      </div>
+      <div><h4>منشه الترا</h4><p>موزاريلا مضاعفة 🔥</p><div style="color:var(--primary-dark); font-weight:bold;">10,000 ج.س</div></div>
       <input type="number" class="qty" data-name="منشه الترا" data-price="10000" min="0" value="0" onchange="calculateTotal()">
     </div>
 
     <div class="menu-item">
-      <div class="item-info">
-        <h4>منشه اسناكس</h4>
-        <p>شبس منشه المقرمش بخل وملح</p>
-        <div class="item-price">2,000 ج.س</div>
-      </div>
+      <div><h4>منشه اسناكس</h4><p>شبس خل وملح</p><div style="color:var(--primary-dark); font-weight:bold;">2,000 ج.س</div></div>
       <input type="number" class="qty" data-name="منشه اسناكس" data-price="2000" min="0" value="0" onchange="calculateTotal()">
     </div>
 
     <div class="options-box">
-      <input type="checkbox" id="isSpicy" style="width: 20px; height: 20px; accent-color: #e53e3e;">
-      <label for="isSpicy" style="margin:0; color: #c53030; font-weight: 800;">🌶️ إضافة نكهة سبايسي (حار)</label>
+      <input type="checkbox" id="isSpicy" style="width: 18px; height: 18px; accent-color: #e53e3e;">
+      <label for="isSpicy" style="margin:0; color: #c53030; font-weight: bold; cursor: pointer;">🌶️ إضافة نكهة سبايسي (حار)</label>
     </div>
 
-    <!-- خانة كوبون الخصم -->
-    <label style="margin-top: 15px;">🎟️ كوبون الخصم (إن وجد):</label>
-    <div class="coupon-box">
-      <input type="text" id="couponCode" placeholder="أدخل كود الكوبون">
-      <button type="button" class="coupon-btn" onclick="applyCoupon()">تطبيق</button>
+    <!-- قسم الكوبون الواضح والبارز -->
+    <div class="coupon-section">
+      <label style="margin-top:0; color:#01579b;">🎟️ هل لديك كوبون خصم؟ أدخله هنا:</label>
+      <div class="coupon-box">
+        <input type="text" id="couponCode" placeholder="أدخل كود الكوبون (مثال: TAIF2026)">
+        <button type="button" class="coupon-btn" onclick="applyCoupon()">تطبيق</button>
+      </div>
     </div>
 
     <label style="margin-top: 15px;">💳 طريقة الدفع:</label>
     <div class="payment-box">
       <select id="paymentMethod" onchange="toggleWalletNotice()">
-        <option value="كاش">💵 كاش (الدفع نقداً عند الاستلام)</option>
-        <option value="محفظة صاح">📱 تحويل عبر محفظة صاح (07209105766599)</option>
+        <option value="كاش">💵 كاش (عند الاستلام)</option>
+        <option value="محفظة صاح">📱 محفظة صاح (07209105766599)</option>
         <option value="الدفع بعد الاستلام">🧾 الدفع بعد الاستلام</option>
       </select>
       <div id="walletNotice" class="wallet-notice">
@@ -418,41 +164,37 @@
   </form>
 </div>
 
-<!-- قالب الفاتورة PDF المُصلح (مخفي بخصائص صحيحة لا تظهر فارغة) -->
+<!-- قالب الفاتورة PDF -->
 <div id="invoice-template">
-  <div class="pdf-header">
-    <h2 style="margin:0; color: #e65100; font-size: 20px;">طيف اسناكس</h2>
-    <p style="margin:4px 0; color:#d84315; font-size: 12px; font-weight: 700;">منشه دايماً بتبسطك</p>
-  </div>
-  <p style="font-size: 11px; margin: 3px 0;"><strong>رقم الأوردر:</strong> <span id="pdf-serial" style="color: #e65100; font-weight: bold;"></span></p>
-  <p style="font-size: 11px; margin: 3px 0;"><strong>التاريخ:</strong> <span id="pdf-date"></span></p>
-  <p style="font-size: 11px; margin: 3px 0;"><strong>العميل:</strong> <span id="pdf-name"></span> | <strong>الهاتف:</strong> <span id="pdf-phone"></span></p>
-  <p style="font-size: 11px; margin: 3px 0;"><strong>الاستلام والعنوان:</strong> <span id="pdf-fulfillment"></span></p>
-  <p style="font-size: 11px; margin: 3px 0;"><strong>الدفع:</strong> <span id="pdf-payment"></span> | <strong>المذاق:</strong> <span id="pdf-spicy"></span></p>
-
-  <table class="pdf-table">
-    <thead>
-      <tr>
-        <th>الصنف</th>
-        <th>الكمية</th>
-        <th>الإجمالي</th>
-      </tr>
-    </thead>
+  <h3 style="color:#e65100; text-align:center; margin:0;">طيف اسناكس</h3>
+  <p style="text-align:center; font-size:11px; color:#d84315;">منشه دايماً بتبسطك</p>
+  <hr style="border:0.5px solid #ddd;">
+  <p style="font-size:11px; margin:2px 0;"><strong>رقم الأوردر:</strong> <span id="pdf-serial" style="color:#e65100; font-weight:bold;"></span></p>
+  <p style="font-size:11px; margin:2px 0;"><strong>التاريخ:</strong> <span id="pdf-date"></span></p>
+  <p style="font-size:11px; margin:2px 0;"><strong>العميل:</strong> <span id="pdf-name"></span> (<span id="pdf-phone"></span>)</p>
+  <p style="font-size:11px; margin:2px 0;"><strong>الاستلام والعنوان:</strong> <span id="pdf-fulfillment"></span></p>
+  <p style="font-size:11px; margin:2px 0;"><strong>الدفع:</strong> <span id="pdf-payment"></span> | <span id="pdf-spicy"></span></p>
+  <p style="font-size:11px; margin:2px 0;" id="pdf-coupon-row"><strong>الكوبون المستخدم:</strong> <span id="pdf-coupon"></span></p>
+  
+  <table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:11px;">
+    <thead><tr style="background:#fff3e0; color:#e65100;"><th style="border:1px solid #ddd; padding:5px;">الصنف</th><th style="border:1px solid #ddd; padding:5px;">الكمية</th><th style="border:1px solid #ddd; padding:5px;">الإجمالي</th></tr></thead>
     <tbody id="pdf-items"></tbody>
   </table>
-
-  <div style="margin-top: 10px; text-align: left; font-size: 12px;">
-    <p style="margin: 2px 0;">المجموع: <span id="pdf-subtotal"></span> ج.س</p>
-    <p style="margin: 2px 0;">التوصيل: <span id="pdf-delivery-fee"></span> ج.س</p>
-    <h3 style="margin: 5px 0; color: #e65100;">الإجمالي النهائي: <span id="pdf-total"></span> ج.س</h3>
+  
+  <div style="margin-top:10px; text-align:left; font-size:11px;">
+    <p style="margin:2px 0;">المجموع: <span id="pdf-subtotal"></span> ج.س</p>
+    <p style="margin:2px 0; color:green;" id="pdf-disc-line">الخصم: -<span id="pdf-discount">0</span> ج.س</p>
+    <p style="margin:2px 0;">التوصيل: <span id="pdf-delivery"></span> ج.س</p>
+    <h4 style="margin:4px 0; color:#e65100;">الإجمالي النهائي: <span id="pdf-total"></span> ج.س</h4>
   </div>
-  <div class="pdf-footer">شكراً لاختياركم طيف اسناكس! ❤️</div>
+  <p style="text-align:center; font-size:10px; color:#666; margin-top:15px;">شكراً لاختياركم طيف اسناكس! ❤️</p>
 </div>
 
 <script>
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2vhFQe7OQA0W-2t5TBXH1dNZfWcMV89-osa6gs4ZE6SpxzCaeVZK-e6pJMI0UtBVk/exec"; 
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz422I_-QTLByPqYsbVjVG4jLlGkuCM0uMrLEkV1WlnI5YaSOIIeG4Fd_cX8rZvIJ8W/exec"; 
   const WHATSAPP_NUMBER = "249117399010"; 
   let discountAmount = 0;
+  let appliedCouponName = "لا يوجد";
 
   function toggleAddressField() {
     let fulfillment = document.getElementById('fulfillmentType').value;
@@ -487,16 +229,18 @@
   }
 
   function applyCoupon() {
-    let code = document.getElementById('couponCode').value.trim();
+    let code = document.getElementById('couponCode').value.trim().toUpperCase();
     if (code === "TAIF2026" || code === "MINSHA") {
-      discountAmount = 1000; // خصم تجريبي 1000 جنيه
+      discountAmount = 1000;
+      appliedCouponName = code;
       document.getElementById('discountRow').style.display = "flex";
       document.getElementById('discountDisplay').innerText = discountAmount.toLocaleString() + " ج.س";
-      alert("تم تطبيق الكوبون بنجاح! خصم 1,000 ج.س");
+      alert("✅ تم تطبيق الكوبون بنجاح! خصم 1,000 ج.س");
       calculateTotal();
     } else {
-      alert("كوبون الخصم غير صحيح أو منتهي الصلاحية.");
+      alert("❌ كود الكوبون غير صحيح.");
       discountAmount = 0;
+      appliedCouponName = "لا يوجد";
       document.getElementById('discountRow').style.display = "none";
       calculateTotal();
     }
@@ -544,7 +288,7 @@
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerText = "⏳ جاري إرسال الطلب وحفظ الفاتورة...";
+    btn.innerText = "⏳ جاري إرسال الطلب للشيت وإصدار الفاتورة...";
 
     const orderData = {
       name: document.getElementById('name').value,
@@ -552,16 +296,18 @@
       fulfillment: fulfillment + " - " + address,
       details: detailsText,
       isSpicy: isSpicy,
+      couponUsed: appliedCouponName,
       paymentMethod: paymentMethod,
       subtotal: subtotal,
+      discount: discountAmount,
       delivery: deliveryFee,
       total: total
     };
 
-    let serial = "ORD-TEMP";
+    let serial = "ORD-PENDING";
     let displayDate = new Date().toISOString().slice(0,10);
 
-    // إرسال البيانات لشيت جوجل
+    // إرسال البيانات واستلام السيريال التسلسلي الحقيقي من الاكسيل شيت
     try {
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
@@ -573,11 +319,10 @@
         displayDate = res.date;
       }
     } catch (err) {
-      const now = new Date();
-      serial = "ORD" + now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2) + "-01";
+      console.log("خطأ في الاتصال بالسيرفر:", err);
     }
 
-    // تعبئة البيانات للـ PDF
+    // تجهيز وتصدير الـ PDF
     document.getElementById('pdf-serial').innerText = serial;
     document.getElementById('pdf-date').innerText = displayDate;
     document.getElementById('pdf-name').innerText = orderData.name;
@@ -585,42 +330,42 @@
     document.getElementById('pdf-fulfillment').innerText = orderData.fulfillment;
     document.getElementById('pdf-payment').innerText = paymentMethod;
     document.getElementById('pdf-spicy').innerText = isSpicy ? "سبايسي 🌶️" : "عادي";
+    document.getElementById('pdf-coupon').innerText = appliedCouponName;
     document.getElementById('pdf-subtotal').innerText = subtotal.toLocaleString();
-    document.getElementById('pdf-delivery-fee').innerText = deliveryFee.toLocaleString();
+    document.getElementById('pdf-discount').innerText = discountAmount.toLocaleString();
+    document.getElementById('pdf-delivery').innerText = deliveryFee.toLocaleString();
     document.getElementById('pdf-total').innerText = total.toLocaleString();
 
     let tbody = document.getElementById('pdf-items');
     tbody.innerHTML = "";
     items.forEach(item => {
-      tbody.innerHTML += `<tr><td>${item.name}</td><td>${item.qty}</td><td>${item.total.toLocaleString()} ج.س</td></tr>`;
+      tbody.innerHTML += `<tr><td style="border:1px solid #ddd; padding:4px;">${item.name}</td><td style="border:1px solid #ddd; padding:4px; text-align:center;">${item.qty}</td><td style="border:1px solid #ddd; padding:4px; text-align:left;">${item.total.toLocaleString()}</td></tr>`;
     });
 
-    // سحب العنصر للخارج لتوليد PDF بشكل صحيح دون أن يظهر فارغاً
     const element = document.getElementById('invoice-template');
     element.style.position = 'relative';
     element.style.left = '0';
 
-    const opt = {
-      margin: 10,
-      filename: `TaifSnacks_${serial}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
     try {
-      await html2pdf().set(opt).from(element).save();
+      await html2pdf().set({
+        margin: 10,
+        filename: `TaifSnacks_${serial}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(element).save();
     } catch(e) {
       console.log("PDF error:", e);
     }
     element.style.position = 'absolute';
     element.style.left = '-9999px';
 
-    // الانتقال للواتساب
-    let walletExtra = (paymentMethod === "محفظة صاح") ? `%0A*⚠️ تنبيه التحويل:* تم التحويل لمحفظة صاح (07209105766599) ورقم الأوردر (${serial}).` : "";
+    // توجيه العميل للواتساب مع رقم الأوردر المتسلسل
+    let walletExtra = (paymentMethod === "محفظة صاح") ? `%0A*⚠️ تنبيه التحويل:* تم التحويل لمحفظة صاح (07209105766599) برقم الأوردر (${serial}).` : "";
     let spicyText = isSpicy ? " | سبايسي 🌶️" : "";
+    let couponText = appliedCouponName !== "لا يوجد" ? `%0A*الكوبون:* ${appliedCouponName} (خصم ${discountAmount}ج)` : "";
     
-    const msg = `مرحباً طيف اسناكس 🍔%0Aأرغب في تأكيد طلب جديد:%0A*رقم الأوردر:* ${serial}%0A*الاسم:* ${orderData.name}%0A*الاستلام:* ${orderData.fulfillment}%0A*الطلبات:* ${detailsText}${spicyText}%0A*الدفع:* ${paymentMethod}%0A*الإجمالي النهائي:* ${total.toLocaleString()} ج.س${walletExtra}%0A%0A(تم حفظ الفاتورة PDF على جهازي).`;
+    const msg = `مرحباً طيف اسناكس 🍔%0Aأرغب في تأكيد طلب جديد:%0A*رقم الأوردر:* ${serial}%0A*الاسم:* ${orderData.name}%0A*الاستلام:* ${orderData.fulfillment}%0A*الطلبات:* ${detailsText}${spicyText}${couponText}%0A*الدفع:* ${paymentMethod}%0A*الإجمالي النهائي:* ${total.toLocaleString()} ج.س${walletExtra}%0A%0A(تم حفظ الفاتورة PDF على جهازي).`;
     
     window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
   });
