@@ -254,8 +254,8 @@
     <div class="summary">
       <p><span>مجموع الطلبات:</span> <span id="subtotalDisplay">0 ج.س</span></p>
       <p id="discountRow" style="display:none; color: #2b8a3e; font-weight: bold;"><span>قيمة الخصم:</span> <span id="discountDisplay">0 ج.س</span></p>
-      <p><span>رسوم التوصيل:</span> <span id="deliveryDisplay">1,000 ج.س[span_8](start_span)[span_8](end_span)</span></p>
-      <p class="total"><span>الإجمالي النهائي:</span> <span id="totalDisplay">1,000 ج.س[span_9](start_span)[span_9](end_span)</span></p>
+      <p><span>رسوم التوصيل:</span> <span id="deliveryDisplay">1,000 ج.س</span>[span_8](start_span)[span_8](end_span)</p>
+      <p class="total"><span>الإجمالي النهائي:</span> <span id="totalDisplay">1,000 ج.س</span>[span_9](start_span)[span_9](end_span)</p>
     </div>
 
     <button type="submit" id="submitBtn" class="submit-btn">✨ تأكيد الطلب وحفظ البيانات كصورة</button>
@@ -295,7 +295,7 @@
 </div>
 
 <script>
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz422I_-QTLByPqYsbVjVG4jLlGkuCM0uMrLEkV1WlnI5YaSOIIeG4Fd_cX8rZvIJ8W/exec"; 
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEIxDSa6r1s0cMYyWHCABY4IHm6FHyQ68qZXerfwVmXJrYH6XbSGBvIU6HsK9DN_-E/exec"; 
   const WHATSAPP_NUMBER = "249117399010";[span_12](start_span)[span_12](end_span)
   let discountAmount = 0;
   let appliedCouponName = "لا يوجد";
@@ -394,50 +394,46 @@
     btn.disabled = true;
     btn.innerText = "⏳ جاري إرسال الطلب وحفظ البيانات...";
 
-    const orderData = {
-      name: document.getElementById('name').value,
-      phone: document.getElementById('phone').value,
-      fulfillment: fulfillment + " - " + address,
-      details: detailsText,
-      isSpicy: isSpicy,
-      couponUsed: appliedCouponName,
-      paymentMethod: paymentMethod,
-      subtotal: subtotal,
-      discount: discountAmount,
-      delivery: deliveryFee,
-      total: total
-    };
+    // استخدام FormData لإرسال البيانات بسلاسة إلى Google Sheets دون مشاكل حظر
+    const formData = new FormData();
+    formData.append("name", document.getElementById('name').value);
+    formData.append("phone", document.getElementById('phone').value);
+    formData.append("fulfillment", fulfillment + " - " + address);
+    formData.append("details", detailsText);
+    formData.append("isSpicy", isSpicy ? "نعم (سبايسي)" : "لا");
+    formData.append("couponUsed", appliedCouponName);
+    formData.append("paymentMethod", paymentMethod);
+    formData.append("subtotal", subtotal);
+    formData.append("discount", discountAmount);
+    formData.append("delivery", deliveryFee);
+    formData.append("total", total);
 
     let serial = "ORD-PENDING";
     let displayDate = new Date().toISOString().slice(0,10);
 
-    // استخدام وضع no-cors لضمان إرسال البيانات لشيت جوجل بنجاح دون حظر المتصفح
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
+        body: formData
       });
-      // توليد رقم تسلسلي محلياً فورياً لضمان عدم توقف العملية
-      const now = new Date();
-      const dateStr = now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2);
-      serial = "ORD" + dateStr + "-" + Math.floor(1000 + Math.random() * 9000);
+      const res = await response.json();
+      if (res.result === "success") {
+        serial = res.serial;
+        displayDate = res.date;
+      }
     } catch (err) {
       console.log("خطأ في الاتصال بالسيرفر:", err);
+      const now = new Date();
+      serial = "ORD" + now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2) + "-01";
     }
 
     // تجهيز وتصدير صورة الفاتورة JPG
     document.getElementById('pdf-serial').innerText = serial;
     document.getElementById('pdf-date').innerText = displayDate;
-    document.getElementById('pdf-name').innerText = orderData.name;
-    document.getElementById('pdf-phone').innerText = orderData.phone;
-    document.getElementById('pdf-fulfillment').innerText = orderData.fulfillment;
+    document.getElementById('pdf-name').innerText = document.getElementById('name').value;
+    document.getElementById('pdf-phone').innerText = document.getElementById('phone').value;
+    document.getElementById('pdf-fulfillment').innerText = fulfillment + " - " + address;
     document.getElementById('pdf-payment').innerText = paymentMethod;
     document.getElementById('pdf-spicy').innerText = isSpicy ? "سبايسي 🌶️" : "عادي";
     document.getElementById('pdf-subtotal').innerText = subtotal.toLocaleString();
-    document.getElementById('pdf-discount').innerText = discountAmount.toLocaleString();
-    document.getElementById('pdf-delivery').innerText = deliveryFee.toLocaleString();
-    document.getElementById('pdf-total').innerText = total.toLocaleString();
-
-    let tbody = documen
+    document.getElementById('pdf-discount').innerText = discountAmount.to
